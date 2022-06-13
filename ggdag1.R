@@ -115,3 +115,38 @@ ggdag_equivalent_dags(confounder_triangle())
 
 ggdag_butterfly_bias(edge_type = "diagonal")
 
+##from https://cran.r-project.org/web/packages/ggdag/vignettes/intro-to-dags.html
+
+dagify(y ~ x) %>% 
+        ggdag()
+
+dagify(y ~~ x) %>% 
+        ggdag()
+
+#  canonicalize the DAG: Add the latent variable in to the graph
+dagify(y ~~ x) %>% 
+        ggdag_canonical() 
+
+dagify(y ~ x,
+       x ~ a,
+       a ~ y) %>% 
+        ggdag() 
+
+dagify(y ~ x) %>%
+        ggdag_canonical()
+
+smoking_ca_dag <- dagify(cardiacarrest ~ cholesterol,
+                         cholesterol ~ smoking + weight,
+                         smoking ~ unhealthy,
+                         weight ~ unhealthy,
+                         labels = c("cardiacarrest" = "Cardiac\n Arrest", 
+                                    "smoking" = "Smoking",
+                                    "cholesterol" = "Cholesterol",
+                                    "unhealthy" = "Unhealthy\n Lifestyle",
+                                    "weight" = "Weight"),
+                         latent = "unhealthy",
+                         exposure = "smoking",
+                         outcome = "cardiacarrest")
+
+ggdag(smoking_ca_dag, text = FALSE, use_labels = "label")
+
