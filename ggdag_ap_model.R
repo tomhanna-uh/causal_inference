@@ -71,10 +71,11 @@ ggdag(ap_dag, text = FALSE, label_col = "blue", stylized = TRUE , use_labels = "
 
 ap_dag2 <- dagify(ap ~ leaders,
                  leaders ~ incentives,
-                 incentives ~ rivalelites + isupporters,
+                 incentives ~ rivalelites + isupporters + other,
                  labels = c("ap" = "Autocracy Promotion", 
                             "leaders" = "Regime Leaders",
                             "rivalelites" = "Rival\n Elites",
+                            "other" = "Other\n Incentives",
                             "incentives" = "Incentives\n on\n Leaders",
                             "unhealthy" = "Unhealthy\n Lifestyle",
                             "isupporters" = "Ideological\n Supporters"),
